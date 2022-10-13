@@ -1,5 +1,6 @@
 <?php
 
     require 'src/render.php';
-    $title="Superman";
+    $title="INICIO";
+    
     echo  render('home',['title'=>$title]);

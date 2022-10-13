@@ -5,12 +5,10 @@
 
 <body>
     <header>
-        <h1><?=$title;?></h1><hr>
-   
-    </header>
     <?php include 'partials/nav.tpl.php';?>
+    </header>
     <main>
+        
     </main>
-
 </body>
 </html>
