@@ -2,22 +2,26 @@
 
 require 'src/db.php';
     
-    $db=connectMysql($dsn,$dbuser,$dbpass);
-    
-    
-    if(!empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['username'])){
-        if(isset($_POST['email']) && isset($_POST['password'])&& isset($_POST['username'])){
+$db=connectMysql( $dsn, $dbuser, $dbpass);
 
-            $email=$_REQUEST['email'];
+    if(!empty($_POST['username']) && !empty($_POST['email']) && !empty($_POST['password'])){
+        if(isset($_POST['username']) && isset($_POST['email'])&& isset($_POST['password'])){
 
-            $password=$_REQUEST['password'];
+            $username=filter_input(INPUT_POST,'username',FILTER_SANITIZE_STRING);
 
-            $username=$_REQUEST['username'];
+            $email=filter_input(INPUT_POST,'email',FILTER_SANITIZE_EMAIL);
 
-            if(reg($db,$email,$password,username)){
+            $password=filter_input(INPUT_POST,'password',FILTER_SANITIZE_STRING);
+            
+            $db=connectMysql( $dsn, $dbuser, $dbpass);
+
+            if(reg($db,$username,$email,$password)){
                 header('Location:?url=dashboard');
+            }else{
+                header('Location:?url=register');
             }
-                header('Location:?url=home');
+        
+        
             
         }
     }

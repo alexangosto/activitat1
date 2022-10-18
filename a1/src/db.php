@@ -1,4 +1,5 @@
 <?php
+
     function connectMysql(string $dsn,string $dbuser,string $dbpass){
         try{
             $db = new PDO($dsn, $dbuser, $dbpass);
@@ -36,19 +37,15 @@
         return false;
     }
 
-    function reg(PDO $db, string $mail, string $password, string $username):bool{
+    function reg($db,string $username, string $email, string $password):bool{
+        $stmt=$db->prepare("INSERT INTO users(username,email,password) VALUES(:username,:email,:passwd) LIMIT 1");
+        $crypt=password_hash($password,PASSWORD_BCRYPT,['cost'=>'4']);
         
-        
-        $stmt=$db->prepare("INSERT INTO users(username,email,password) VALUES(?,?,?)");
-        $res=$stmt->execute([':username'=>$username,':email'=>$mail,'password'=>$password]);
-        if($stmt->rowCount()==1){
-            $user=$stmt->fetchALL()[0];
-            if(password_verify($password,$user->password)){
-                $_SESSION['user']=$user;
-                return true;
-            }
-            //return true;
+        if($stmt->execute([':username'=>$username,':email'=>$email,':passwd'=>$crypt])){
+            return true;
+        }else{
+            return false;
         }
-        return false;
+        
     }
     

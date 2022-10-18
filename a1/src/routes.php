@@ -4,7 +4,7 @@ $routes=[
     'login',
     'logaction',
     'register',
-    'registeraction',
+    'regaction',
     'dashboard',
     'error',
     'home',
